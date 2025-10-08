@@ -21,11 +21,23 @@ namespace cuda {
 
 Result<void*> load_library(const std::string& path) {
 #ifdef _WIN32
-  auto lib_handle = LoadLibrary(path.c_str());
-  if (hModule == NULL) {
+  HMODULE handle = nullptr;
+  if (GetProcAddress(GetModuleHandleW(L"KERNEL32.DLL"), "AddDllDirectory") != NULL) {
+      handle = LoadLibraryExW(
+          wname.c_str(),
+          NULL,
+          LOAD_LIBRARY_SEARCH_DEFAULT_DIRS);
+  }
+
+  // Fallback if that failed
+  if (!handle) {
+      handle = LoadLibraryW(wname.c_str());
+  }
+  if (handle == NULL) {
       ET_LOG(Error, "Failed to load %s with error: %lu", path.c_str(), GetLastError());
       return Error::AccessFailed;
   }
+  void* lib_handle = (void*)handle; // This I think is technically ub on windows. We should probably explicitly pack the bytes.
 
 #else
   void* lib_handle = dlopen(path.c_str(), RTLD_LAZY | RTLD_LOCAL);
@@ -34,7 +46,7 @@ Result<void*> load_library(const std::string& path) {
     return Error::AccessFailed;
   }
 #endif
-  return (void*) lib_handle;
+  return lib_handle;
 }
 
 Error close_library(void* lib_handle) {
