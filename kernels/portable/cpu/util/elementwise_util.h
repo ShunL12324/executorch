@@ -86,7 +86,7 @@ inline void dtype_specialized_elementwise_fn_impl(
   static_assert(
       (std::is_same_v<Args, std::pair<const Tensor*, SupportedTensorDtypes>> &&
        ...));
-  constexpr auto kNumInputs = sizeof...(inputs);
+  static constexpr std::size_t kNumInputs = sizeof...(inputs);
   // All inputs must be of type CTYPE_COMPUTE.
   ET_DCHECK(
       ((inputs.first->scalar_type() ==
@@ -230,7 +230,7 @@ inline void apply_elementwise_fn_generic_impl(
     const Tensor& out,
     SupportedTensorDtypes out_dtypes,
     Args... inputs) {
-  constexpr auto kNumInputs = sizeof...(inputs);
+  static constexpr std::size_t kNumInputs = sizeof...(inputs);
 
   struct InputInfo {
     load_to_compute_fn<CTYPE_COMPUTE> load_to_compute;
