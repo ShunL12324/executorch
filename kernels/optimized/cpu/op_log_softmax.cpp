@@ -31,13 +31,8 @@ namespace {
 
 template <typename IN_T, typename OUT_T>
 void log_softmax_kernel(const Tensor& input, int64_t dim, Tensor& out) {
-#ifdef _MSC_VER
-  const IN_T* __restrict input_data_base = input.const_data_ptr<IN_T>();
-  OUT_T* __restrict output_data_base = out.mutable_data_ptr<OUT_T>();
-#else
-  const IN_T* __restrict__ input_data_base = input.const_data_ptr<IN_T>();
-  OUT_T* __restrict__ output_data_base = out.mutable_data_ptr<OUT_T>();
-#endif
+  const IN_T* ET_RESTRICT input_data_base = input.const_data_ptr<IN_T>();
+  OUT_T* ET_RESTRICT output_data_base = out.mutable_data_ptr<OUT_T>();
 
   if (input.dim() == 0) {
     output_data_base[0] = 0;
