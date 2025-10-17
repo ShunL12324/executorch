@@ -230,7 +230,7 @@ inline void apply_elementwise_fn_generic_impl(
     const Tensor& out,
     SupportedTensorDtypes out_dtypes,
     Args... inputs) {
-  static constexpr std::size_t kNumInputs = sizeof...(inputs);
+  constexpr std::size_t kNumInputs = sizeof...(inputs);
 
   struct InputInfo {
     load_to_compute_fn<CTYPE_COMPUTE> load_to_compute;
