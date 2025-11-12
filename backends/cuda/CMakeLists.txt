@@ -176,7 +176,7 @@ target_link_options(
 # consumers.
 target_link_libraries(
   aoti_cuda_backend PUBLIC cuda_platform extension_tensor cuda_tensor_maker
-                           CUDA::cudart ${CMAKE_DL_LIBS}
+                           CUDA::cudart_shared ${CMAKE_DL_LIBS}
 )
 
 if(MSVC)
