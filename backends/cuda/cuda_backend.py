@@ -161,6 +161,7 @@ class CudaBackend(BackendDetails):
             "max_autotune_gemm_backends": "TRITON",
             # Use TRITON backend for convolution operations tuning only to avoid using operators in libtorch
             "max_autotune_conv_backends": "TRITON",
+            "aot_inductor.emit_multi_arch_kernel": True,
         }
 
         platform = "linux"
@@ -185,7 +186,6 @@ class CudaBackend(BackendDetails):
                     "aot_inductor.aoti_shim_library": "aoti_cuda_shims",
                     "aot_inductor.aoti_shim_library_path": shim_library_path,
                     "aot_inductor.precompile_headers": False,
-                    "aot_inductor.emit_multi_arch_kernel": True,
                 }
             )
 
