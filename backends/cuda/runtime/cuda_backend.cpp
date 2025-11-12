@@ -97,6 +97,25 @@ class ET_EXPERIMENTAL CudaBackend final
       FreeableBuffer* processed, // This will be a empty buffer
       ArrayRef<CompileSpec> compile_specs // This will be my empty list
   ) const override {
+    // Log CUDA runtime version as early as possible
+    int cuda_runtime_version = 0;
+    cudaError_t version_err = cudaRuntimeGetVersion(&cuda_runtime_version);
+    if (version_err == cudaSuccess) {
+      int major = cuda_runtime_version / 1000;
+      int minor = (cuda_runtime_version % 1000) / 10;
+      ET_LOG(
+          Info,
+          "CUDA Runtime version: %d.%d (raw: %d)",
+          major,
+          minor,
+          cuda_runtime_version);
+    } else {
+      ET_LOG(
+          Warning,
+          "Failed to get CUDA runtime version: %s",
+          cudaGetErrorString(version_err));
+    }
+
     std::string method_name;
     for (const CompileSpec& spec : compile_specs) {
       if (std::strcmp(spec.key, "method_name") == 0) {
