@@ -189,6 +189,9 @@ class CudaBackend(BackendDetails):
                 }
             )
 
+        # Set CUDA architectures to target: sm_80 (Ampere/A100) and sm_89 (Ada/RTX 4090)
+        os.environ["TORCH_CUDA_ARCH_LIST"] = "8.0;8.9"
+
         with collect_unsupported_fallback_kernels(), torch.nn.attention.sdpa_kernel(
             [
                 SDPBackend.MATH  # pyre-ignore[16]: Module `torch.nn.attention` has no attribute `SDPBackend`.
