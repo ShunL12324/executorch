@@ -111,7 +111,7 @@ class ET_EXPERIMENTAL CudaBackend final
           cuda_runtime_version);
     } else {
       ET_LOG(
-          Warning,
+          Error,
           "Failed to get CUDA runtime version: %s",
           cudaGetErrorString(version_err));
     }
