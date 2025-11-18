@@ -37,7 +37,6 @@ using executorch::runtime::BackendExecutionContext;
 using executorch::runtime::BackendInitContext;
 using executorch::runtime::CompileSpec;
 using executorch::runtime::DelegateHandle;
-using executorch::runtime::Error;
 using executorch::runtime::EValue;
 using executorch::runtime::FreeableBuffer;
 using executorch::runtime::MemoryAllocator;
@@ -83,7 +82,7 @@ class ET_EXPERIMENTAL CudaBackend final
           Info,
           "Failed to load AOTInductorModelUpdateConstantsFromBlob. This .so is probably compiled on an old version of torch (<2.9.0)");
     }
-    return Error::Ok;
+    return executorch::runtime::Error::Ok;
   }
 
  public:
@@ -263,7 +262,7 @@ class ET_EXPERIMENTAL CudaBackend final
           &gpu_input_handle);
 
       ET_CHECK_OR_RETURN_ERROR(
-          create_err == Error::Ok,
+          create_err == executorch::runtime::Error::Ok,
           Internal,
           "Failed to create GPU tensor for input %d",
           i);
@@ -272,7 +271,7 @@ class ET_EXPERIMENTAL CudaBackend final
 
       // Copy data from CPU to GPU
       ET_CHECK_OR_RETURN_ERROR(
-          aoti_torch_copy_(gpu_inputs[i], cpu_tensor, 0) == Error::Ok,
+          aoti_torch_copy_(gpu_inputs[i], cpu_tensor, 0) == executorch::runtime::Error::Ok,
           Internal,
           "Failed to copy input %d from CPU to GPU",
           i);
@@ -299,7 +298,7 @@ class ET_EXPERIMENTAL CudaBackend final
           &gpu_output_handle);
 
       ET_CHECK_OR_RETURN_ERROR(
-          create_err == Error::Ok,
+          create_err == executorch::runtime::Error::Ok,
           Internal,
           "Failed to create GPU tensor for output %d",
           i);
@@ -317,7 +316,7 @@ class ET_EXPERIMENTAL CudaBackend final
         nullptr); // proxy_executor_handle can remain nullptr
 
     ET_CHECK_OR_RETURN_ERROR(
-        error == Error::Ok,
+        error == executorch::runtime::Error::Ok,
         Internal,
         "AOTInductorModelContainerRun failed with error code %d",
         error);
@@ -336,7 +335,7 @@ class ET_EXPERIMENTAL CudaBackend final
           i);
     }
 
-    return Error::Ok;
+    return executorch::runtime::Error::Ok;
   }
 
   void destroy(DelegateHandle* handle_) const override {
@@ -365,23 +364,23 @@ class ET_EXPERIMENTAL CudaBackend final
     // AOTInductorModelContainerDelete(handle->container_handle);
 
     // Now close the shared library
-    auto err = Error::Ok;
-    if (handle->so_handle != nullptr) {
-      err = close_library(handle->so_handle);
-    }
+    auto err = executorch::runtime::Error::Ok;
+    // if (handle->so_handle != nullptr) {
+    //   err = close_library(handle->so_handle);
+    // }
 
-    // Remove the temporary shared library file
-    if (!handle->so_path.empty()) {
-      std::error_code remove_error;
-      std::filesystem::remove(handle->so_path, remove_error);
-      ET_CHECK_OR_LOG_ERROR(
-          !remove_error,
-          "Failed to remove temporary shared library %s: %s",
-          handle->so_path.c_str(),
-          remove_error.message().c_str());
-    }
+    // // Remove the temporary shared library file
+    // if (!handle->so_path.empty()) {
+    //   std::error_code remove_error;
+    //   std::filesystem::remove(handle->so_path, remove_error);
+    //   ET_CHECK_OR_LOG_ERROR(
+    //       !remove_error,
+    //       "Failed to remove temporary shared library %s: %s",
+    //       handle->so_path.c_str(),
+    //       remove_error.message().c_str());
+    // }
 
-    delete handle;
+    // delete handle;
     clear_all_tensors();
   }
 };
