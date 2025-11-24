@@ -71,20 +71,6 @@ class CudaBackend(AotiBackend, BackendDetails):
         except Exception:
             return False
 
-    @staticmethod
-    def preprocess(  # noqa: C901
-        edge_program: ExportedProgram,
-        compile_specs: List[CompileSpec],
-    ) -> PreprocessResult:
-        # Configure CUDA environment variables based on detected version
-        emit_multi_arch_kernel = CudaBackend._setup_cuda_environment_for_fatbin()
-
-        # Move the edge_program from CPU to CUDA for aoti compile
-        cuda_edge_program = move_to_device_pass(edge_program, "cuda")
-
-        # replace slice_copy.Tensor with slice.Tensor, select_copy.int with select.int
-        ReplaceViewCopyWithViewPass()(cuda_edge_program.graph_module)
-
     @classmethod
     def get_supported_fallback_kernels(cls) -> Dict[str, Any]:
         return {
@@ -110,6 +96,9 @@ class CudaBackend(AotiBackend, BackendDetails):
         Get AOTI compile options for CUDA backend.
         Options may vary based on platform (Linux vs Windows).
         """
+
+        # Configure CUDA environment variables based on detected version
+        emit_multi_arch_kernel = CudaBackend._setup_cuda_environment_for_fatbin()
         # Base options for all platforms
         options: Dict[str, typing.Any] = {
             # Disable this to support sdpa decomposition
