@@ -189,7 +189,6 @@ class CudaBackend(BackendDetails):
                 }
             )
 
-
         with collect_unsupported_fallback_kernels(), torch.nn.attention.sdpa_kernel(
             [
                 SDPBackend.MATH  # pyre-ignore[16]: Module `torch.nn.attention` has no attribute `SDPBackend`.
