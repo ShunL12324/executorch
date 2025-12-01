@@ -38,7 +38,7 @@ bitwise_not_out(KernelRuntimeContext& ctx, const Tensor& in, Tensor& out) {
       ctx, tensors_have_same_dim_order(in, out), InvalidArgument, out);
 
   // @lint-ignore CLANGTIDY facebook-hte-CArray
-  static constexpr const char op_name[] = "bitwise_not.out";
+  static constexpr const char* op_name = "bitwise_not.out";
   if (in.scalar_type() == executorch::aten::ScalarType::Bool) {
     apply_unary_map_fn(
         [](const bool val_in) { return !val_in; },

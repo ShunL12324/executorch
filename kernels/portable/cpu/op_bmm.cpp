@@ -37,7 +37,7 @@ Tensor& bmm_out(
       out);
 
   // @lint-ignore CLANGTIDY facebook-hte-CArray
-  static constexpr const char op_name[] = "bmm.out";
+  static constexpr const char* op_name = "bmm.out";
 
   auto in_type = in.scalar_type();
 

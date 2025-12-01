@@ -51,7 +51,7 @@ Tensor& full_like_out(
   ScalarType out_type = out.scalar_type();
 
   // @lint-ignore CLANGTIDY facebook-hte-CArray
-  static constexpr const char op_name[] = "full_like.out";
+  static constexpr const char* op_name = "full_like.out";
 
   ET_SWITCH_REALHBBF16_TYPES(out_type, ctx, op_name, CTYPE_OUT, [&] {
     auto opt_val_casted =

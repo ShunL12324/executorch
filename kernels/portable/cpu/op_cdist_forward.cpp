@@ -162,7 +162,7 @@ Tensor& _cdist_forward_out(
   ScalarType out_type = out.scalar_type();
 
   // @lint-ignore CLANGTIDY facebook-hte-CArray
-  static constexpr const char op_name[] = "_cdist_forward.out";
+  static constexpr const char* op_name = "_cdist_forward.out";
 
   ET_SWITCH_FLOATHBF16_TYPES(
       out_type, ctx, op_name, CTYPE, [&] { cdist<CTYPE>(x1, x2, out, p); });

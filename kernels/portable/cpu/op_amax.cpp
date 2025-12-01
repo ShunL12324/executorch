@@ -47,7 +47,7 @@ Tensor& amax_out(
   ReduceOverDimListPlan plan(in, dim_list);
 
   // @lint-ignore CLANGTIDY facebook-hte-CArray
-  static constexpr const char op_name[] = "amax.out";
+  static constexpr const char* op_name = "amax.out";
 
   ET_SWITCH_REALHBBF16_TYPES(in.scalar_type(), ctx, op_name, CTYPE, [&]() {
     CTYPE* out_data = out.mutable_data_ptr<CTYPE>();

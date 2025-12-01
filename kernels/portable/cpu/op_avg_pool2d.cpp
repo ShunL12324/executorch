@@ -69,7 +69,7 @@ Tensor& avg_pool2d_out(
   ScalarType in_type = in.scalar_type();
 
   // @lint-ignore CLANGTIDY facebook-hte-CArray
-  static constexpr const char op_name[] = "avg_pool2d.out";
+  static constexpr const char* op_name = "avg_pool2d.out";
 
   ET_SWITCH_FLOATHBF16_TYPES_AND(Long, in_type, ctx, op_name, CTYPE, [&]() {
     if (divisor_override.has_value()) {

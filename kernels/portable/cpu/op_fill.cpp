@@ -42,7 +42,7 @@ Tensor& fill_scalar_out(
       "Failed to resize output tensor.");
 
   // @lint-ignore CLANGTIDY facebook-hte-CArray
-  static constexpr const char op_name[] = "fill.Scalar_out";
+  static constexpr const char* op_name = "fill.Scalar_out";
 
   ET_SWITCH_REALHBBF16_TYPES(a_type, ctx, op_name, CTYPE_A, [&] {
     auto opt_b_casted = utils::internal::check_overflow_scalar_cast<CTYPE_A>(b);
@@ -87,7 +87,7 @@ Tensor& fill_tensor_out(
       "Failed to resize output tensor.");
 
   // @lint-ignore CLANGTIDY facebook-hte-CArray
-  static constexpr const char op_name[] = "fill.Tensor_out";
+  static constexpr const char* op_name = "fill.Tensor_out";
 
   ET_SWITCH_REALHBBF16_TYPES(a_type, ctx, op_name, CTYPE_A, [&] {
     CTYPE_A b_casted{};

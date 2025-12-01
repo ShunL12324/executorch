@@ -46,7 +46,7 @@ Tensor& argmax_out(
       ctx, tensors_have_same_dim_order(in, out), InvalidArgument, out);
 
   // @lint-ignore CLANGTIDY facebook-hte-CArray
-  static constexpr const char op_name[] = "argmax.out";
+  static constexpr const char* op_name = "argmax.out";
 
   ET_SWITCH_REALHBF16_TYPES(in.scalar_type(), ctx, op_name, CTYPE, [&] {
     int64_t* out_data = out.mutable_data_ptr<int64_t>();

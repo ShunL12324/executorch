@@ -66,7 +66,7 @@ Tensor& flip_out(
   ArrayRef<bool> flip_dim(flip_dim_data, flip_dim_length);
 
   // @lint-ignore CLANGTIDY facebook-hte-CArray
-  static constexpr const char op_name[] = "flip_out";
+  static constexpr const char* op_name = "flip_out";
 
   ET_SWITCH_REALHBBF16_TYPES(in.scalar_type(), ctx, op_name, CTYPE, [&] {
     const CTYPE* in_data = in.const_data_ptr<CTYPE>();

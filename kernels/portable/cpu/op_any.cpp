@@ -32,7 +32,7 @@ Tensor& any_all_out(KernelRuntimeContext& ctx, const Tensor& in, Tensor& out) {
   ScalarType out_type = out.scalar_type();
 
   // @lint-ignore CLANGTIDY facebook-hte-CArray
-  static constexpr const char op_name[] = "any.all_out";
+  static constexpr const char* op_name = "any.all_out";
 
   ET_SWITCH_REALHBBF16_TYPES(in_type, ctx, op_name, CTYPE_IN, [&] {
     ET_SWITCH_TWO_TYPES(Bool, Byte, out_type, ctx, op_name, CTYPE_OUT, [&] {
@@ -83,7 +83,7 @@ Tensor& any_dims_out(
   ScalarType out_type = out.scalar_type();
 
   // @lint-ignore CLANGTIDY facebook-hte-CArray
-  static constexpr const char op_name[] = "any.dims_out";
+  static constexpr const char* op_name = "any.dims_out";
 
   const bool in_not_empty = in.numel() > 0;
   std::optional<MapReduceOverDimListPlan> plan;
@@ -150,7 +150,7 @@ Tensor& any_out(
   ScalarType out_type = out.scalar_type();
 
   // @lint-ignore CLANGTIDY facebook-hte-CArray
-  static constexpr const char op_name[] = "any.out";
+  static constexpr const char* op_name = "any.out";
 
   ET_SWITCH_REALHBBF16_TYPES(in_type, ctx, op_name, CTYPE_IN, [&] {
     ET_SWITCH_TWO_TYPES(Bool, Byte, out_type, ctx, op_name, CTYPE_OUT, [&] {

@@ -60,7 +60,7 @@ Tensor& cat_out(
       executorch::runtime::isComplexType(out.scalar_type());
 
   // @lint-ignore CLANGTIDY facebook-hte-CArray
-  static constexpr const char op_name[] = "cat.out";
+  static constexpr const char* op_name = "cat.out";
 
   if (out_is_complex) {
     // TODO: The current support for complex dtype enforces that input and

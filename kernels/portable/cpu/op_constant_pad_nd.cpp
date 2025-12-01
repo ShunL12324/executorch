@@ -215,7 +215,7 @@ Tensor& constant_pad_nd_out(
   ScalarType in_type = in.scalar_type();
 
   // @lint-ignore CLANGTIDY facebook-hte-CArray
-  static constexpr const char op_name[] = "constant_pad_nd.out";
+  static constexpr const char* op_name = "constant_pad_nd.out";
 
   ET_SWITCH_REALHBBF16_TYPES(in_type, ctx, op_name, CTYPE, [&]() {
     auto opt_value_casted =

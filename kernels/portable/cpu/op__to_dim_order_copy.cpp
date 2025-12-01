@@ -54,7 +54,7 @@ Tensor& _to_dim_order_copy_out(
   }
 
   // @lint-ignore CLANGTIDY facebook-hte-CArray
-  static constexpr const char op_name[] =
+  static constexpr const char* op_name =
       "dim_order_ops::_to_dim_order_copy.out";
 
   ET_SWITCH_REALHBBF16_TYPES(self.scalar_type(), ctx, op_name, CTYPE_IN, [&] {

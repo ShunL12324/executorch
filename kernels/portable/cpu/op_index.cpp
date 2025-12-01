@@ -170,7 +170,7 @@ Tensor& fast_path(
   char* out_data = out.mutable_data_ptr<char>();
 
   // @lint-ignore CLANGTIDY facebook-hte-CArray
-  static constexpr const char op_name[] = "index.Tensor_out";
+  static constexpr const char* op_name = "index.Tensor_out";
 
   ET_SWITCH_TWO_TYPES(Long, Int, index_type, ctx, op_name, CTYPE, [&]() {
     const CTYPE* const index_arr = index.const_data_ptr<CTYPE>();
